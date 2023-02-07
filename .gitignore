@@ -1,5 +1,6 @@
 .DS_Store
-sheets.txt
+sheets.json
+token.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
