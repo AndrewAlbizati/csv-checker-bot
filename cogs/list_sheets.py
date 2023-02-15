@@ -9,7 +9,7 @@ class ListSheets(commands.Cog):
     
 
     @discord.slash_command(description="Lists all Google Sheets that are being tracked.")
-    async def add_sheet(self, ctx: commands.Context):
+    async def list_sheets(self, ctx: commands.Context):
         embed = discord.Embed()
         embed.title = f"Sheets Tracked by {ctx.author.name}"
 

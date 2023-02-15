@@ -4,8 +4,8 @@ import pandas as pd
 
 class Checker:
     """Creates a class that contains methods for checking the hours on a particular spreadsheet.
-    
     """
+    
     def __init__(self, url: str):
         """Creates a new instance of the Checker class for a specific speadsheet.
 

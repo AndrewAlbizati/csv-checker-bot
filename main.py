@@ -10,6 +10,13 @@ def main():
     except FileExistsError:
         pass
 
+    try:
+        f = open('sheets.json', 'x')
+        f.close()
+        print('Created sheets.json')
+    except FileExistsError:
+        pass
+
     with open('token.txt', 'r') as f:
         token = f.readline().strip()
     
