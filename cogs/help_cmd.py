@@ -9,7 +9,9 @@ class HelpCommand(commands.Cog):
     @discord.slash_command(description="Sends information about the bot.")
     async def help(self, ctx: commands.Context):
         embed = discord.Embed()
-        embed.title = "Help"
+        embed.title = "Help with Time Tracker Bot"
+        embed.set_image(url="https://github.com/AndrewAlbizati/csv-checker-bot/blob/main/sheet_screenshot.png?raw=true")
+        embed.color = discord.Colour.green()
         
         embed.add_field(name="How to Use", value="""This bot is used for tracking hours logged on a Google Sheet in the format shown in the screenshot.
         The bot detects whenever the minutes reported doesn't match with the hours reported, and will alert you to these mistakes.""", inline=False)
@@ -21,7 +23,7 @@ class HelpCommand(commands.Cog):
         """, inline=False)
         
         embed.add_field(name="More Information", value=f"Visit [here](https://github.com/AndrewAlbizati/csv-checker-bot) for more information.", inline=False)
-
+        
         await ctx.respond(embed=embed, ephemeral=True)
 
 
