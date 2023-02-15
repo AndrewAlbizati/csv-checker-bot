@@ -3,6 +3,7 @@ from bot import Bot
 
 
 def main():
+    # Create token.txt if it doesn't already exist
     try:
         f = open('token.txt', 'x')
         f.close()
@@ -10,13 +11,15 @@ def main():
     except FileExistsError:
         pass
 
+    # Create sheets.json if it doesn't already exist
     try:
         f = open('sheets.json', 'x')
         f.close()
         print('Created sheets.json')
     except FileExistsError:
         pass
-
+    
+    # Read token, if not found, take user input
     with open('token.txt', 'r') as f:
         token = f.readline().strip()
     
@@ -26,6 +29,7 @@ def main():
             f.write(token)
             f.close()
 
+    # Create bot and load all commands from cogs
     bot = Bot()
     for file in os.listdir("./cogs"):
         if file.endswith(".py"):
@@ -39,6 +43,7 @@ def main():
                 print('Failed to load extension {}\n{}'.format(extension, exc))
 
     bot.run(token)
+
 
 if __name__ == "__main__":
     main()

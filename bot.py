@@ -1,7 +1,5 @@
 from discord.ext import commands
 import discord
-import json
-from checker import Checker
 
 
 class Bot(commands.Bot):
@@ -12,4 +10,4 @@ class Bot(commands.Bot):
     
         
     async def on_ready(self):
-        print(f'Logged on as {self.user}!')
+        print(f'Logged in as {self.user}!')

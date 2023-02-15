@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import json
+import sheet_manager
 
 
 class RemoveSheet(commands.Cog):
@@ -8,29 +8,25 @@ class RemoveSheet(commands.Cog):
         self.bot = bot
     
 
-    @discord.slash_command(description="Lists all Google Sheets that are being tracked.")
-    async def remove_sheet(self, ctx: commands.Context):
-        embed = discord.Embed()
-        embed.title = f"Sheets Tracked by {ctx.author.name}"
-
-        sheets = self.get_sheets(str(ctx.author.id))
-
-        if not sheets:
-            embed.description = "**No sheets are being tracked."
-        else:
-            for k,v in sheets:
-                embed.description += f"[{k}]({v})\n"
-            
-        await ctx.respond(embed=embed)
+    @discord.slash_command(description="Removes a Google Sheet from being tracked.")
+    @discord.option("name", description="Name of the CSV")
+    async def remove_sheet(self, ctx: commands.Context, name: str):
+        # Return if name not provided
+        if not name:
+            return
     
-
-    def get_sheets(self, user: str) -> dict[str,str]:
-        with open('sheets.json', 'r') as f:
-            data = json.load(f)
-        if user in data.keys():
-            return data[user]
-        return None
-
+        embed = discord.Embed()
+        if sheet_manager.remove_sheet(str(ctx.author.id), name):
+            embed.title = "Successfully Removed Sheet"
+            embed.description = f"The Google Sheet **{name}** was removed successfully."
+            embed.color = discord.Colour.green()
+        else:
+            embed.title = "Error Removing Sheet"
+            embed.description = f"The Google Sheet **{name}** couldn't be removed. You may want to check that you submitted the correct name."
+            embed.color = discord.Colour.red()
+        
+        await ctx.respond(embed=embed, ephemeral=True)
+    
 
 def setup(bot):
     bot.add_cog(RemoveSheet(bot))

@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import json
+import sheet_manager
 
 
 class ListSheets(commands.Cog):
@@ -11,26 +11,23 @@ class ListSheets(commands.Cog):
     @discord.slash_command(description="Lists all Google Sheets that are being tracked.")
     async def list_sheets(self, ctx: commands.Context):
         embed = discord.Embed()
-        embed.title = f"Sheets Tracked by {ctx.author.name}"
+        embed.title = f"Sheets Tracked by {ctx.author.name}#{ctx.author.discriminator}"
 
-        sheets = self.get_sheets(str(ctx.author.id))
+        sheets = sheet_manager.get_sheets(str(ctx.author.id))
 
-        if not sheets:
-            embed.description = "**No sheets are being tracked."
+        if not sheets or len(sheets.keys()) == 0:
+            embed.description = "**No sheets are being tracked.**"
+            embed.color = discord.Colour.red()
         else:
-            for k,v in sheets:
-                embed.description += f"[{k}]({v})\n"
+            description = ''
+            for k,v in sheets.items():
+                description += f"[{k}]({v})\n"
+
+            embed.description = description
+            embed.color = discord.Colour.green()
             
-        await ctx.respond(embed=embed)
+        await ctx.respond(embed=embed, ephemeral=True)
     
-
-    def get_sheets(self, user: str) -> dict[str,str]:
-        with open('sheets.json', 'r') as f:
-            data = json.load(f)
-        if user in data.keys():
-            return data[user]
-        return None
-
 
 def setup(bot):
     bot.add_cog(ListSheets(bot))
