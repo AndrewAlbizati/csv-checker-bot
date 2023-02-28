@@ -19,7 +19,7 @@ class HelpCommand(commands.Cog):
         embed.add_field(name="Commands", value="""**/add_sheet <name> <link>** Adds a Google Sheet to be tracked by the bot.
         **/remove_sheet <name>** Removes a Google Sheet from being tracked by the bot.
         **/list_sheets** Lists all sheets being tracked.
-        **/check_sheet <name>** Checks a sheet to see if all hours are logged correctly.
+        **/check <name>** Checks a sheet to see if all hours are logged correctly.
         """, inline=False)
         
         embed.add_field(name="More Information", value=f"Visit [here](https://github.com/AndrewAlbizati/csv-checker-bot) for more information.", inline=False)

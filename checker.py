@@ -28,21 +28,22 @@ class Checker:
         df = pd.read_csv(self.download_url, sep=',')
         df = df.dropna(how='all')
         total_minutes = 0
-        for index, row in df.iterrows():
-            time_entries = 0
+        for _, row in df.iterrows():
             minutes = 0
-            for i in range(1, 4):
-                if not f"Hours {i}" in row.keys() or pd.isnull(row[f"Hours {i}"]):
-                    continue
-                time_entries += 1
-                
-                difference_mins = self.get_difference(row[f"Hours {i}"])
 
+            hour_rows = 0
+            while f"Hours {hour_rows + 1}" in row.keys() and not pd.isnull(row[f"Hours {hour_rows + 1}"]):
+                if not f"Hours {hour_rows + 1}" in row.keys() or pd.isnull(row[f"Hours {hour_rows + 1}"]):
+                    continue
+                
+                difference_mins = Checker.get_difference(row[f"Hours {hour_rows + 1}"])
                 minutes += divmod(difference_mins.days * 86400 + difference_mins.seconds, 60)[0] % 720
+
+                hour_rows += 1
             total_minutes += minutes
         
-            if minutes != row["Minutes"] and time_entries > 0:
-                incorrect_dates.append((row["Date"], minutes. row["Minutes"]))
+            if minutes != row["Minutes"] and hour_rows > 0:
+                incorrect_dates.append((row["Date"], minutes, int(row["Minutes"])))
 
         return incorrect_dates
 

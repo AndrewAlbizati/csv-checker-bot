@@ -9,9 +9,9 @@ class CheckSheet(commands.Cog):
         self.bot = bot
     
 
-    @discord.slash_command(description="Checks Google Sheet that all minutes are reported correctly.")
+    @discord.slash_command(description="Checks a Google Sheet's hours")
     @discord.option("name", description="Name of the CSV")
-    async def check_sheet(self, ctx: commands.Context, name: str):
+    async def check(self, ctx: commands.Context, name: str):
         # Return if name not provided
         if not name:
             return

@@ -1,6 +1,7 @@
 import json
 from typing import Optional
 
+
 def contains_sheet(id: str, name: str) -> bool:
     with open("sheets.json", "r") as f:
         data = json.load(f)
